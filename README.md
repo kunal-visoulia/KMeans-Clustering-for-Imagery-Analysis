@@ -30,7 +30,7 @@ Randomly initialize(only once) two points(because I want 2 clusters; **K centroi
 
 1. **Cluster Assignment** :<br/>
 ![](images/4.png)<br/>
-It goes through each of the examples(green dots) and depending on whether it's closer to the red cluster centroid or the blue cluster centroid, it is going to assign each of the data points to one of the two cluster centroids(color each of the points either red or blue).
+It goes through each of the examples(green dots) and depending on whether it's closer to the red cluster centroid or the blue cluster centroid, it is going to assign each of the data points to one of the two cluster centroids(color each of the points either red or blue).<br/>
 ![](images/5.png)<br/>
 
 2. **Move Centroid Step** : take the two cluster centroids, and move them to the average of the points colored the same colour.
