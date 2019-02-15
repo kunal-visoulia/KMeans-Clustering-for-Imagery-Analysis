@@ -26,7 +26,7 @@ Let's say I want to take an unlabeled data set like the one shown here, and I wa
 ![](images/3.png)
 
 The K Means clustering algorithm is an iterative algorithm:
-Randomly initialize(only once) two points(because I want 2 clusters; **K centroid for K clusters**), called the cluster centroids.
+Randomly initialize(**Not the recommended way of random initialization**) two points(because I want 2 clusters; **K centroid for K clusters**), called the cluster centroids.
 
 1. **Cluster Assignment** :<br/>
 ![](images/4.png)<br/>
@@ -85,10 +85,11 @@ Knowing what is the optimization objective of k-means:
 
 **Notations**<br/>
 ![](images/18.png)<br/>
-c<sup>(i)</sup> = index or the number of the cluster, to which an example xi is currently assigned
+c<sup>(i)</sup> = index or the number of the cluster, to which an example xi is currently assigned<br/>
 K = Total number of clusters
 
 **Cost Function and Optimization Objective**
+
 ![](images/19.png)<br/>
 The cost function(called Distortion Cost Function) that k-means is minimizing is a function J of all of these parameters, c1 through cm and mu 1 through mu k that k-means is varying as the algorithm runs.<br/>
 And the optimization objective is shown to the right, the square distance between each example xi and the location of the cluster centroid to which xi has been assigned(red line). <br/>
@@ -97,7 +98,54 @@ And the optimization objective is shown to the right, the square distance betwee
 
 ***So Kmeans algorithm is taking the two sets of variables and partitioning them into two halves(c<sup>(i)</sup>'s and mu<sub>i</sub>'s), And what it does is it first minimizes J with respect to the variable c<sup>(i)</sup>'s and then it minimizes J with respect to the variables mu<sub>i</sub>'s and then it keeps iterating on.***
 
+### Random Initialzation in KMeans
+There are few different ways that one can imagine using to randomly initialize the cluster centroids. But, this method is much more recommended than most of the other options one might think about:</br>
+When running K-means, you should have the number of cluster centroids, K, set to be less than the number of training examples "m". **It would be really weird to run K-means with a number of cluster centroids that's, equal or greater than the number of examples you have, right?**<br/>
+Randomly pick k training examples. So, and, what I do is then set mu 1 till mu k equal to these k examples.
+For ex, K = 2<br/>
+![](images/20.png)<br/>
+![](images/21.png)<br/>
+then, mu<sub>1</sub> = x<sup>( i )</sup> and mu<sub>2</sub> = x<sup>( j )</sup>
 
+Or you could be unlucky and have:<br/>
+![](images/22.png)<br/>
 
+>**As seen above, K-means can end up converging to different solutions depending on exactly how the clusters were initialized, and so, depending on the random initialization, K-means can end up at different solutions. And, in particular, K-means can actually end up at local optima.**
 
+### Local Optima
+If you run KMeans:<br/>
+![](images/23.png)<br/>
+It ends up at a good local optima(local optima of the distortion function, J) and this might be really the global optima<br/>
+![](images/24.png)<br/>
 
+But if you had a particularly unlucky, random initialization, K-means can also get stuck at different local optima.<br/> 
+![](images/25.png)<br/>
+
+**So, if you're worried about K-means getting stuck in local optima,** and you want to increase the odds of K-means finding the best possible clustering, try**multiple, random initializations**. So, instead of just initializing K-means once and hopping that that works, initialize K-means lots of times and run K-means lots of times, and use that to try to make sure we get as good a solution, as good as local or global optima as possible.
+
+Let's say your run KMeans 100 times(50-1000 best number of iterations)<br/>
+![](images/26.png)<br/>
+**Then pick clustering that gave lowest cost J**. Also, if you are running K-means with a fairly small number of clusters(K = 2-10), then doing multiple random initializations can often make sure that you find a better local optima.<br/>
+But for K > 10, having multiple random initializations is less likely to make a huge difference and there is a much higher chance that your first random initialization will give you a pretty decent solution already.
+
+### Choosing the Number of Clusters(K)
+>***For the most part, the number of customers K is still chosen by hand by human input or human insight. One way to try to do so is to use the Elbow Method, but It isn't always expected to work well. The better way to think about how to choose the number of clusters is to ask, for what purpose are you running K-means. And then to think, what is the number of clusters K that serves whatever later purpose that you actually run the K-means for.***
+
+Plot Cost Fucntion, J vs No. of clusters, K and use the value at the elbow.
+
+![](images/27.png)<br/>
+Often, we end up with plot on the right, with not that clear where the location of the elbow is .
+
+**Suppose you run k-means using k = 3 and k = 5. You find that the cost function J is much higher for k = 5 than for k = 3. What can you conclude?**<br/>
+In the run with k = 5, k-means got stuck in a bad local minimum. You should try re-running k-means with multiple random initializations.
+
+**Another method for choosing K**<br/>
+Using the example of T-shirt busines from above, to decide, between three clusters versus five clusters<br/>
+![](images/28.png)<br/>
+Think about this from the perspective of the T-shirt business and ask: "Well if I have five segments, then how well will my T-shirts fit my customers and so, how many T-shirts can I sell? How happy will my customers be?".<br/>
+What really makes sense, from the perspective of the T-shirt business:
+- I want to have more T-shirt sizes so that my T-shirts fit my customers better. Or
+- do I want to have fewer T-shirt sizes so that I make fewer sizes of T-shirts. And I can sell them to the customers more cheaply. <br/>
+And so, the t-shirt selling business, that might give you a way to decide, between three clusters versus five clusters.
+
+Say, you are  using K-means for image compression, And so if you were trying to choose how many clusters to use for that problem, you could use the evaluation metric of image compression to choose the number of clusters, K. So, how good do you want the image to look versus how much do you want to compress the file size of the image,
