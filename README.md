@@ -12,10 +12,67 @@ Dataset: http://yann.lecun.com/exdb/mnist/
 The data set had 0-9 digit images, example dataset:<br/>
 ![](images/1.png)
 
-- Assuming 10 be the number of clusters(for 10 digits), I fit the MiniBatchKmeans algorithm(sue to large dataset, 60K x 784).
+- Assuming 10 be the number of clusters(for 10 digits), I fit the MiniBatchKmeans algorithm(due to large dataset, 60K x 784).
 - Also KMeans being an unsupervised learning algorithm,it assigned clusters to dataset. Then I mapped each cluster number to appropriate integer number(the most common integer in the cluster because the number of cluster was just 10 and there would obviously be some misclassfications)
 - Optimizing and Evaluating the Clustering Algorithm: Varied number of clusters as follows:10,16,36,64,144,256,400 and compared Inertia, Homogeneity, Accuracy. **Achieved an accuracy of 99.3 with 256 clusters adn 90% with 400 clusters but 400 clusters took much more computation time with not much increase in accuracy, so chose 256 clusters to be optimal(tradeoff)**
 - Visualizing Cluster Centroids: The most representative point within each cluster is called the centroid. ***For visualization purpose, I set the number of cluster to 36***
 
 ![](images/2.png)
 
+## Kmeans CLUSTERING: An Unsupervised Learning Algorithm
+In the clustering problem we are given an unlabeled data set and we would like to have an algorithm automatically group the data into coherent subsets or into coherent clusters for us.
+
+Let's say I want to take an unlabeled data set like the one shown here, and I want to group the data into two clusters.<br/>
+![](images/3.png)
+
+The K Means clustering algorithm is an iterative algorithm:
+Randomly initialize(only once) two points(because I want 2 clusters; **K centroid for K clusters**), called the cluster centroids.
+
+1. **Cluster Assignment** :
+![](images/4.png)<br/>
+It goes through each of the examples(green dots) and depending on whether it's closer to the red cluster centroid or the blue cluster centroid, it is going to assign each of the data points to one of the two cluster centroids(color each of the points either red or blue).
+![](images/5.png)<br/>
+
+2. **Move Centroid Step** : take the two cluster centroids, and move them to the average of the points colored the same colour.
+    - look at all the red points and compute the average(the mean of the location of all the red points),move the red cluster       centroid there. 
+    - And the same things for the blue cluster centroid, look at all the blue dots and compute their mean, and then move the       blue cluster centroid there. 
+
+![](images/6.png)<br/>
+
+Go back to another cluster assignment step, look at all of my unlabeled examples and depending on whether it's closer the red or the blue cluster centroid, color them either red or blue. Assign each point to one of the two cluster centroids. **And so the colors of some of the points just changed.**<br/>
+**(1)**![](images/7.png)<br/>
+
+And then, do another move centroid step :  Compute the average of all the blue points, compute the average of all the red points and move the cluster centroids.<br/>
+**(2)**![](images/8.png)<br/>
+
+**(1)**![](images/9.png)<br/>
+
+**(2)**![](images/10.png)<br/>
+
+And we are done! Kmeans has converged finding two clusters in the data.
+
+More formally,<br/>
+![](images/11.png)<br/>
+![](images/12.png)<br/>
+
+Another way of writing c<sup>(i)</sup> </br>
+![](images/13.png)<br/>
+minimize over my values of k and find the value of k that minimizes this distance between x<sup>(i)</sup> and the cluster centroid, and then, the value of k that minimizes this, gets set in c<sup>(i)</sup> </br>
+
+For the move centroid step, for example:<br/>
+![](images/14.png)<br/>
+
+**But what if there is a cluster centroid no points with zero points assigned to it?** Just eliminate that cluster centroid and you will end up with (K - 1) clusters, **if you really need k clusters**, then the other thing you can do if you have a cluster centroid with no points assigned to it, just randomly reinitialize that cluster centroid
+
+### Problems with Nnon well separated clusters
+We've been picturing K Means and applying it to data sets like that shown here, where we have three pretty well separated clusters, and we'd like an algorithm to find the 3 clusters for us.<br/>
+![](images/15.png)<br/>
+
+But it turns out that very often K Means is also applied to data sets that look like this where there may not be several very well separated clusters. Example:<br/>
+
+Let's say I want to design and sell t shirts of three sizes, small, medium and large. So how big should I make my small one? How big should I my medium? And how big should I make my large t-shirts.
+![](images/16.png)<br/>
+
+On running Kmeans,say, this clustering happens:<br/>
+![](images/17.png)<br/>
+So, even though the data, before hand it didn't seem like we had 3 well separated clusters, K Means will kind of separate out the data into multiple clusters for you.
