@@ -64,7 +64,7 @@ For the move centroid step, for example:<br/>
 
 **But what if there is a cluster centroid no points with zero points assigned to it?** Just eliminate that cluster centroid and you will end up with (K - 1) clusters, **if you really need k clusters**, then the other thing you can do if you have a cluster centroid with no points assigned to it, just randomly reinitialize that cluster centroid
 
-### Problems with Nnon well separated clusters
+### Problems with non well separated clusters
 We've been picturing K Means and applying it to data sets like that shown here, where we have three pretty well separated clusters, and we'd like an algorithm to find the 3 clusters for us.<br/>
 ![](images/15.png)<br/>
 
@@ -76,3 +76,28 @@ Let's say I want to design and sell t shirts of three sizes, small, medium and l
 On running Kmeans,say, this clustering happens:<br/>
 ![](images/17.png)<br/>
 So, even though the data, before hand it didn't seem like we had 3 well separated clusters, K Means will kind of separate out the data into multiple clusters for you.
+
+### Optimization Objective for KMeans
+K-means also has an optimization objective or a cost function that it's trying to minimize.<br/>
+Knowing what is the optimization objective of k-means:
+- will help to debug the learning algorithm and make sure that k-means is running correctly. And
+- use this to help k-means find better costs and avoid the local ultima.
+
+**Notations**<br/>
+![](images/18.png)<br/>
+c<sup>(i)</sup> = index or the number of the cluster, to which an example xi is currently assigned
+K = Total number of clusters
+
+**Cost Function and Optimization Objective**
+![](images/19.png)<br/>
+The cost function(called Distortion Cost Function) that k-means is minimizing is a function J of all of these parameters, c1 through cm and mu 1 through mu k that k-means is varying as the algorithm runs.<br/>
+And the optimization objective is shown to the right, the square distance between each example xi and the location of the cluster centroid to which xi has been assigned(red line). <br/>
+>**Mathematically, what the cluster assignment step is doing is exactly Minimizing J, with respect to the variables c1, c2 and so on, up to cm, while holding the cluster centroids mu 1 up to mu k, fixed. So what the cluster assignment step does is it doesn't change the cluster centroids, but what it's doing is, exactly, picking the values of c1, c2, up to cm, that minimizes the cost function, or the distortion function J => _Assign each point to a cluster centroid that is closest to it, because that's what minimizes the square of distance between the points in the cluster centroid._** <br/>
+>**The second step was the move centroid step. It can be shown mathematically that what the move centroid step does is it chooses the values of mu that minimizes J, so it minimizes the cost function J with respect to the locations of the cluster centroids mu 1 through mu k.**
+
+***So Kmeans algorithm is taking the two sets of variables and partitioning them into two halves(c<sup>(i)</sup>'s and mu<sub>i</sub>'s), And what it does is it first minimizes J with respect to the variable c<sup>(i)</sup>'s and then it minimizes J with respect to the variables mu<sub>i</sub>'s and then it keeps iterating on.***
+
+
+
+
+
