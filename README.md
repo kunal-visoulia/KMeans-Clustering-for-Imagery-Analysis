@@ -28,7 +28,7 @@ Let's say I want to take an unlabeled data set like the one shown here, and I wa
 The K Means clustering algorithm is an iterative algorithm:
 Randomly initialize(only once) two points(because I want 2 clusters; **K centroid for K clusters**), called the cluster centroids.
 
-1. **Cluster Assignment** :
+1. **Cluster Assignment** :<br/>
 ![](images/4.png)<br/>
 It goes through each of the examples(green dots) and depending on whether it's closer to the red cluster centroid or the blue cluster centroid, it is going to assign each of the data points to one of the two cluster centroids(color each of the points either red or blue).
 ![](images/5.png)<br/>
@@ -70,7 +70,7 @@ We've been picturing K Means and applying it to data sets like that shown here, 
 
 But it turns out that very often K Means is also applied to data sets that look like this where there may not be several very well separated clusters. Example:<br/>
 
-Let's say I want to design and sell t shirts of three sizes, small, medium and large. So how big should I make my small one? How big should I my medium? And how big should I make my large t-shirts.
+Let's say I want to design and sell t shirts of three sizes, small, medium and large. So how big should I make my small one? How big should I my medium? And how big should I make my large t-shirts.<br/>
 ![](images/16.png)<br/>
 
 On running Kmeans,say, this clustering happens:<br/>
