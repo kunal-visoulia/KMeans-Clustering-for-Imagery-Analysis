@@ -1,7 +1,8 @@
 # KMeans-Clustering-for-Imagery-Analysis
 Use a K-means algorithm to perform image classification
 
-Clustering isn't limited to the consumer information and population sciences, it can be used for imagery analysis as well. Leveraging the MNIST dataset, understanding the use of K-means clustering for computer vision.
+## DATASET
+Clustering isn't limited to the consumer information and population sciences, it can be used for imagery analysis as well. Leveraging the MNIST dataset(from keras.datasets)
 
 In this project,
 - Preprocess images for clustering
