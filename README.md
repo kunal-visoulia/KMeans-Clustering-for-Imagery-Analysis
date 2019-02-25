@@ -149,3 +149,13 @@ What really makes sense, from the perspective of the T-shirt business:
 And so, the t-shirt selling business, that might give you a way to decide, between three clusters versus five clusters.
 
 Say, you are  using K-means for image compression, And so if you were trying to choose how many clusters to use for that problem, you could use the evaluation metric of image compression to choose the number of clusters, K. So, how good do you want the image to look versus how much do you want to compress the file size of the image,
+
+#### K-Means Advantages :
+- If variables are huge, then  K-Means most of the times computationally faster than hierarchical clustering, if we keep k smalls.
+- K-Means produce tighter clusters than hierarchical clustering, especially if the clusters are globular.
+
+#### K-Means Disadvantages :
+- Difficult to predict K-Value.
+- With global cluster, it didn't work well.
+- Different initial partitions can result in different final clusters.
+- It does not work well with clusters (in the original data) of Different size and Different density
